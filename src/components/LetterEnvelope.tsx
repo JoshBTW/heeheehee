@@ -44,28 +44,25 @@ export default function LetterEnvelope({ onEmitBurst, isMusicPlaying, onToggleMu
     onEmitBurst(e.clientX, e.clientY);
   };
 
-  const handleSendReply = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!repliedContent.trim()) return;
+  const handleMailClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    const textToSubmit = repliedContent.trim();
+    if (!textToSubmit) {
+      e.preventDefault();
+      return;
+    }
 
     triggerSparkleSound();
     onEmitBurst(window.innerWidth / 2, window.innerHeight * 0.6);
 
-    const messageText = repliedContent.trim();
-    const newReplies = [...replies, messageText];
+    const newReplies = [...replies, textToSubmit];
     setReplies(newReplies);
     localStorage.setItem('megan_replies', JSON.stringify(newReplies));
-    
-    // Auto-dispatch via native email client
-    const recipient = 'joshua_sheen@s2024.ssts.edu.sg';
-    const subject = encodeURIComponent('A Keepsake Reply from Megan 💖');
-    const body = encodeURIComponent(`Dearest Joshua,\n\n${messageText}\n\nWith love,\nMegan`);
-    
-    // Use window.location.href to invoke mail client safely
-    window.location.href = `mailto:${recipient}?subject=${subject}&body=${body}`;
 
-    setRepliedContent('');
-    setIsSent(true);
+    // Clear content and show the saved alert after a split-second so the browser processes the mailto link click natively.
+    setTimeout(() => {
+      setRepliedContent('');
+      setIsSent(true);
+    }, 100);
 
     setTimeout(() => {
       setIsSent(false);
@@ -75,6 +72,13 @@ export default function LetterEnvelope({ onEmitBurst, isMusicPlaying, onToggleMu
   const handleRestart = () => {
     setEnvelopeState('closed');
   };
+
+  const recipient = 'joshua_sheen@s2024.ssts.edu.sg';
+  const subject = encodeURIComponent('A Keepsake Reply from Megan 💖');
+  const body = encodeURIComponent(`Dearest Joshua,\n\n${repliedContent.trim()}\n\nWith love,\nMegan`);
+  const mailtoUrl = repliedContent.trim()
+    ? `mailto:${recipient}?subject=${subject}&body=${body}`
+    : '#';
 
   return (
     <div className="w-full max-w-4xl mx-auto px-4 py-8 flex flex-col items-center font-serif">
@@ -284,7 +288,7 @@ export default function LetterEnvelope({ onEmitBurst, isMusicPlaying, onToggleMu
                   <span>Leave a Private Reply for Joshua</span>
                 </h4>
                 
-                <form onSubmit={handleSendReply} className="space-y-4">
+                <form onSubmit={(e) => e.preventDefault()} className="space-y-4">
                   <textarea
                     placeholder="Type your warm thoughts here, Megan..."
                     value={repliedContent}
@@ -297,18 +301,18 @@ export default function LetterEnvelope({ onEmitBurst, isMusicPlaying, onToggleMu
                     <span className="text-[10px] text-stone-500 font-sans italic">
                       Opens email drafted for joshua_sheen@s2024.ssts.edu.sg
                     </span>
-                    <button
-                      type="submit"
-                      disabled={!repliedContent.trim()}
+                    <a
+                      href={mailtoUrl}
+                      onClick={handleMailClick}
                       className={`px-5 py-2.5 rounded font-sans text-[10px] font-bold tracking-widest uppercase transition-all duration-300 flex items-center gap-1.5 ${
                         repliedContent.trim()
                           ? 'bg-[#2d2a26] text-white hover:bg-stone-800 cursor-pointer shadow-sm'
-                          : 'bg-stone-100 text-stone-400 cursor-not-allowed border border-stone-200'
+                          : 'bg-stone-100 text-stone-400 cursor-not-allowed border border-stone-200 pointer-events-none'
                       }`}
                     >
                       <span>Send via Email</span>
                       <Send className="w-2.5 h-2.5" />
-                    </button>
+                    </a>
                   </div>
                 </form>
 
