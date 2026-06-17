@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-cursive: 'Great Vibes', cursive;
+  
+  --color-romantic-50: #fffafb;
+  --color-romantic-100: #ffeef2;
+  --color-romantic-200: #ffdbe3;
+  --color-romantic-300: #ffb8c7;
+  --color-romantic-400: #ff85a0;
+  --color-romantic-500: #f43f5e;
+  --color-romantic-600: #e11d48;
+  --color-romantic-700: #be123c;
+  --color-romantic-800: #9f1239;
+  --color-romantic-950: #4c0519;
+
+  /* Editorial Aesthetic Specific */
+  --color-editorial-cream: #f9f7f2;
+  --color-editorial-ink: #2d2a26;
+  --color-editorial-gray: #6d645a;
+  --color-editorial-sand: #ece6de;
+  --color-editorial-gilded: #c8bdae;
+  --color-editorial-border: #e5e1da;
+}
+
+/* Custom romantic card floating effect */
+@keyframes romanticGlow {
+  0%, 100% {
+    box-shadow: 0 4px 20px -2px rgba(244, 63, 94, 0.15);
+  }
+  50% {
+    box-shadow: 0 10px 30px 4px rgba(244, 63, 94, 0.25);
+  }
+}
+
+.romantic-glow-hover:hover {
+  animation: romanticGlow 2s infinite ease-in-out;
+}
+
+/* Sparkle particles styling */
+.sparkle-canvas {
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 50;
+}
+
+/* Simple heart animation */
+@keyframes heartPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+}
+
+.pulse-heart {
+  animation: heartPulse 1.2s infinite ease-in-out;
+}
+
+/* Custom scrollbar for love letter */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #ffdbe3;
+  border-radius: 20px;
+}
+

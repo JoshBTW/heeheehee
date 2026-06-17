@@ -1,0 +1,6 @@
+{
+  "name": "Love Letter to Megan",
+  "description": "An interactive, beautiful digital keepsake created by Joshua to convey his love for Megan, featuring warm aesthetic panels, personal questions, sweet interactive experiences, and a heartfelt love letter tucked inside a digital envelope.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
